@@ -52,7 +52,7 @@ impl Entry {
     }
         
     fn save_all(entries : &Vec<Self>) {
-        let mut file = OpenOptions::new().create(true).write(true).open(Entry::DATA_FILEPATH).unwrap();
+        let mut file = OpenOptions::new().create(true).write(true).truncate(true).open(Entry::DATA_FILEPATH).unwrap();
         let mut data : String = String::new();
         for entry in entries {
             data = data + &serde_json::to_string(entry).unwrap() + "\n";
