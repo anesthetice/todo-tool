@@ -1,3 +1,4 @@
+// version 0.1
 // todo-tool, a simple terminal application to quickly create daily todo notes
 
 use time::OffsetDateTime;
