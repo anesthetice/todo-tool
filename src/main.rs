@@ -38,19 +38,19 @@ impl Entry {
         let mut file = OpenOptions::new().create(true).append(true).read(true).open(Entry::DATA_FILEPATH).unwrap();
         file.read_to_string(&mut file_data).unwrap_or(0);
 
-        if file_data.len() > 0 {
-            let element_vector : Vec<&str> = file_data.trim().split("\n").collect();
+        let element_vector : Vec<&str> = file_data.trim().split("\n").collect();
 
-            for element in element_vector {
-                match serde_json::from_str::<Entry>(element) {
-                    Ok(entry) => entries.push(entry),
-                    Err(e) => eprintln!("Entry::load_all() | failed to parse the following line : {}\n{}", element, e),
-                }
+        for element in element_vector {
+            match serde_json::from_str::<Entry>(element) {
+                Ok(entry) => entries.push(entry),
+                Err(error) => {
+                    if !element.is_empty() {eprintln!("failed to parse the following line from data.json : {}\n--> {}", element, error)};
+                },
             }
         }
         return entries;
     }
-
+        
     fn save_all(entries : &Vec<Self>) {
         let mut file = OpenOptions::new().create(true).write(true).open(Entry::DATA_FILEPATH).unwrap();
         let mut data : String = String::new();
