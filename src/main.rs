@@ -79,7 +79,6 @@ fn main() {
         print!("\n");
     };
 
-
     let mut entries : Vec<Entry> = Entry::load_all();
     let mut user_input : String = String::new();
     let empty_entry : Entry = Entry::new(current_datetime.clone());
@@ -106,7 +105,7 @@ fn main() {
     }
 
     loop {
-        stdout().write_all(">> ".as_bytes()); stdout().flush().unwrap();
+        stdout().write_all(">> ".as_bytes()).unwrap(); stdout().flush().unwrap();
         stdin().read_line(&mut user_input).unwrap();
         newline();
         match user_input.trim() {
